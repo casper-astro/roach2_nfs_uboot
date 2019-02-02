@@ -1,6 +1,8 @@
 roach2_nfs_uboot
 ================
 
+You can download the ROACH2 root filesystem in tar.gz form [here](https://drive.google.com/file/d/1vdTiA1MazQ7_HBKMc3J9Hbpync2UWM7w/view?usp=sharing)
+
 All files required to boot ROACH2 using NFS, u-boot, kernel and onboard rom file system
 
 These files usually go in "/home/nfs/roach2/", but this depends on how NFS and dnsmasq is configured. 
