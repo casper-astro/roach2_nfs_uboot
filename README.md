@@ -1,18 +1,13 @@
 roach2_nfs_uboot
 ================
 
-You can download the ROACH2 root filesystem in tar.gz form [here](https://drive.google.com/file/d/1vdTiA1MazQ7_HBKMc3J9Hbpync2UWM7w/view?usp=sharing)
+This repository contains the files required to boot ROACH1/2 using NFS.
 
-All files required to boot ROACH2 using NFS, u-boot, kernel and onboard rom file system
+You will need to configure your tftp server to serve these boot files (kernel and uImage) to ROACH hosts. If using the combined TFTP/DHCP server `dnsmasq`, this means placing them in a directory refered to by `dnsmasq`'s `tftp-root` configuration parameter.
 
-These files usually go in "/home/nfs/roach2/", but this depends on how NFS and dnsmasq is configured. 
-Please perform all action as ROOT to retain correct permissions (git clone as ROOT). 
+An example `dnsmasq` configuration file is provided, which hosts the boot files from the `/srv/tftpboot/` directory. This config file will allow `dnsmasq` to serve up either ROACH1 or ROACH2 files, based on the MAC address of a booting board.
+In the provided example, the TFTP / DHCP server has the IP address `10.0.1.1`, and will serve IP addresses on the `10.0.1.xxx` subnet.
 
-Untar debian file system as ROOT to set correct permissions: tar -xzvf snapshot_file
-Now create a symbolic link: ln -s debian-stable-devel current
-When ROACH2 boots it will look for "current" in the NFS directory.
+You will also need a root filesystem for your chosen board. You can obtain these in tar.gz form [here (ROACH2)](https://drive.google.com/file/d/1vdTiA1MazQ7_HBKMc3J9Hbpync2UWM7w/view?usp=sharing) or [here (ROACH1)](https://drive.google.com/file/d/1kQX7lvX7HQwaUMdYmhc7_dU2dh9aaloO/view?usp=sharing).
 
-Check that symbolic links are correct in boot directory (to create symolic link: ln -s filename linkname):
-"u-boot.bin" must point to required u-boot.bin file (e.g. u-boot-envfix.bin)
-"romfs" must point to required romfs file (e.g. roach2-root-7.romfs)
-"uImage" must point to required romfs file (e.g. uImage-r2borph3)
+These filesystems should be extracted and referenced in your `dnsmasq` configuration file using the DHCP `root-path` option. See the provided exmaple for more details.
